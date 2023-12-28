@@ -1,0 +1,10 @@
+# Generate new alias for url
+POST http://localhost:8080/api/v1/urls
+Content-Type: application/json
+
+{
+  "originalUrl": "https://www.google.com",
+  "alias": "google"
+}
+
+
