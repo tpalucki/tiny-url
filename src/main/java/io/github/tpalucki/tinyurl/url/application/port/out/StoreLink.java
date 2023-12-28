@@ -4,4 +4,6 @@ import io.github.tpalucki.tinyurl.url.domain.LinkMapping;
 
 public interface StoreLink {
     LinkMapping store(LinkMapping linkMapping);
+
+    LinkMapping getByAlias(String alias);
 }

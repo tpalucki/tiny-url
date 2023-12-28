@@ -20,4 +20,12 @@ public class InMemoryLinkStore implements StoreLink {
         log.info("Link mapping stored: {}", linkMapping);
         return linkMapping;
     }
+
+    @Override
+    public LinkMapping getByAlias(String alias) {
+        log.info("Getting link mapping for alias: {}", alias);
+        var mapping = store.get(alias);
+        log.info("Link mapping found: {}", mapping);
+        return mapping;
+    }
 }
