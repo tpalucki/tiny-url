@@ -1,9 +1,12 @@
 package io.github.tpalucki.tinyurl.url.adapter.in;
 
+import io.github.tpalucki.tinyurl.url.application.exception.AliasAlreadyDefinedException;
 import io.github.tpalucki.tinyurl.url.application.port.in.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -33,5 +36,11 @@ class UrlController {
         var shortenUrlResponse = getLink.getLink(alias);
         log.info("Get original URL response: {}", shortenUrlResponse);
         return dtoMapper.toDto(shortenUrlResponse, productionUrl);
+    }
+
+    @ExceptionHandler(value = {AliasAlreadyDefinedException.class})
+    ErrorResponse handleError(AliasAlreadyDefinedException e) {
+        log.error("Alias already defined: {}", e.getMessage());
+        return ErrorResponse.builder(e, HttpStatus.CONFLICT, e.getMessage()).build();
     }
 }
